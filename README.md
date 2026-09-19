@@ -1,25 +1,55 @@
-# Price-Compare
+# Price Compare
 
-### Aim : 
+A Phase 1 price comparison application with a FastAPI backend and Streamlit frontend.
 
-Find same product price at a moment form Amazon and Flipkart. Price of product is displayed, so that buyers can make the decision to buy from platform which offers lowest price.
+## Features
 
-### Description:
+- Search Amazon India and Flipkart in parallel
+- Normalize results into a common offer format
+- Compare total prices and identify the lowest offer
+- Show match confidence, availability, and product links
+- Handle retailer failures without failing the whole search
 
-It takes the name of the product as input then it compares the price of the product from amazon and flipkart then return the minimun price and the url of the product.In this Web scraping with Python project looks for a certain product through URL (weblink) and determines the current pricing.
+> Retailer pages change frequently and may block automated requests. Use official or approved retailer APIs where available, and make sure your usage complies with each retailer's terms.
 
-This is especially helpful if you want to keep track of the pricing of a certain item (or products) across various eCommerce sites.The price of the same product from various sources is presented so that the customer may compare costs and choose the platform that gives the best deal.
+## Setup
 
-### How to run?
+```bash
+python -m venv .venv
+# Windows: .venv\\Scripts\\activate
+# macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+```
 
-First, install two Python libraries: 1) requests 2) BeautifulSoup
+Start the API:
 
-      pip install requests
+```bash
+uvicorn api.main:app --reload
+```
 
-      pip install BeautifulSoup
+Start the frontend in another terminal:
 
-Then run <b><i>price_compare.ipynb</i></b> file step by step. 
+```bash
+streamlit run app.py
+```
 
-It will give current price of product on amazon and flipkart. And it will also display on which platform price is less with product link to buy.  
+The API is available at `http://localhost:8000`, with interactive documentation at `http://localhost:8000/docs`.
 
-#### Project Link : https://github.com/kaushal0506/Price-Compare-python
+The Streamlit application is available at `http://localhost:8501`.
+
+## API
+
+```text
+GET /health
+GET /api/v1/compare?q=iphone%2011%2064gb&minimum_score=0.55
+```
+
+## Project layout
+
+```text
+app.py                 Streamlit frontend
+api/main.py            FastAPI application
+src/models.py          Shared response models
+src/services/          Search orchestration and matching
+src/stores/            Store adapters
+```
